@@ -125,8 +125,20 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
+};
+
+exports.Prisma.CodeVerificationScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  already_used: 'already_used',
+  code: 'code',
+  created_at: 'created_at',
+  used_at: 'used_at',
+  expire_date: 'expire_date',
+  expired: 'expired'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -191,6 +203,7 @@ exports.TransactionType = exports.$Enums.TransactionType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  CodeVerification: 'CodeVerification',
   Account: 'Account',
   Transaction: 'Transaction',
   Category: 'Category',
