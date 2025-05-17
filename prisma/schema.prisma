@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  accounts Account[]
+  transactions Transaction[]
+  categories Category[]
+  budget Budget[]
+}
+
+
+model Account {
+  id Int @id @default(autoincrement())
+  name String
+  initial_balance Decimal @default(0) @db.Decimal(10, 2)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id Int
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+enum TransactionType {
+  INCOME
+  OUTCOME
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+  description String?
+  value Decimal @db.Decimal(10, 2)
+  type TransactionType
+  date DateTime //Data da transação
+  created_at DateTime @default(now()) //Data de criação do registro no banco
+  updated_at DateTime @updatedAt
+  user_id Int
+  category_id Int
+  account_id Int
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  account Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  icon String? //Nem sei se vou colocar mas tá aí
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by Int
+
+  user User @relation(fields: [created_by], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  budget Budget[]
+}
+
+model Budget {
+  id Int @id @default(autoincrement())
+  name String
+  amount Decimal @db.Decimal(10, 2)
+  period_start DateTime
+  period_end DateTime
+  user_id Int
+  category_id Int?
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [category_id], references: [id], onDelete: Cascade)
+}
