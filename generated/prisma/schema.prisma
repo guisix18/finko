@@ -15,16 +15,30 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  name         String
-  email        String        @unique
-  password     String
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @updatedAt
-  accounts     Account[]
-  transactions Transaction[]
-  categories   Category[]
-  budget       Budget[]
+  id                Int                @id @default(autoincrement())
+  name              String
+  email             String             @unique
+  password          String
+  is_active         Boolean            @default(false)
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  accounts          Account[]
+  transactions      Transaction[]
+  categories        Category[]
+  budget            Budget[]
+  code_verification CodeVerification[]
+}
+
+model CodeVerification {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  created_for  User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  already_used Boolean   @default(false)
+  code         String    @unique
+  created_at   DateTime  @db.Timestamp(6)
+  used_at      DateTime? @db.Timestamp(6)
+  expire_date  DateTime  @db.Timestamp(6)
+  expired      Boolean   @default(false)
 }
 
 model Account {

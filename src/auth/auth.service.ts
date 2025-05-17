@@ -35,6 +35,8 @@ export class AuthService {
 
     if (!user) throw new BadRequestException(LOGIN_ERROR);
 
+    if (!user.is_active) throw new BadRequestException('User is not active');
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {

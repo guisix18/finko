@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model CodeVerification
+ * 
+ */
+export type CodeVerification = $Result.DefaultSelection<Prisma.$CodeVerificationPayload>
+/**
  * Model Account
  * 
  */
@@ -190,6 +195,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.codeVerification`: Exposes CRUD operations for the **CodeVerification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CodeVerifications
+    * const codeVerifications = await prisma.codeVerification.findMany()
+    * ```
+    */
+  get codeVerification(): Prisma.CodeVerificationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.account`: Exposes CRUD operations for the **Account** model.
@@ -671,6 +686,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    CodeVerification: 'CodeVerification',
     Account: 'Account',
     Transaction: 'Transaction',
     Category: 'Category',
@@ -693,7 +709,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "transaction" | "category" | "budget"
+      modelProps: "user" | "codeVerification" | "account" | "transaction" | "category" | "budget"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -768,6 +784,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      CodeVerification: {
+        payload: Prisma.$CodeVerificationPayload<ExtArgs>
+        fields: Prisma.CodeVerificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CodeVerificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CodeVerificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          findFirst: {
+            args: Prisma.CodeVerificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CodeVerificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          findMany: {
+            args: Prisma.CodeVerificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>[]
+          }
+          create: {
+            args: Prisma.CodeVerificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          createMany: {
+            args: Prisma.CodeVerificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CodeVerificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>[]
+          }
+          delete: {
+            args: Prisma.CodeVerificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          update: {
+            args: Prisma.CodeVerificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.CodeVerificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CodeVerificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CodeVerificationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>[]
+          }
+          upsert: {
+            args: Prisma.CodeVerificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CodeVerificationPayload>
+          }
+          aggregate: {
+            args: Prisma.CodeVerificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCodeVerification>
+          }
+          groupBy: {
+            args: Prisma.CodeVerificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CodeVerificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CodeVerificationCountArgs<ExtArgs>
+            result: $Utils.Optional<CodeVerificationCountAggregateOutputType> | number
           }
         }
       }
@@ -1152,6 +1242,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    codeVerification?: CodeVerificationOmit
     account?: AccountOmit
     transaction?: TransactionOmit
     category?: CategoryOmit
@@ -1254,6 +1345,7 @@ export namespace Prisma {
     transactions: number
     categories: number
     budget: number
+    code_verification: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1261,6 +1353,7 @@ export namespace Prisma {
     transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
     categories?: boolean | UserCountOutputTypeCountCategoriesArgs
     budget?: boolean | UserCountOutputTypeCountBudgetArgs
+    code_verification?: boolean | UserCountOutputTypeCountCode_verificationArgs
   }
 
   // Custom InputTypes
@@ -1300,6 +1393,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBudgetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BudgetWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCode_verificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodeVerificationWhereInput
   }
 
 
@@ -1403,6 +1503,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    is_active: boolean | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -1412,6 +1513,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    is_active: boolean | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -1421,6 +1523,7 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    is_active: number
     created_at: number
     updated_at: number
     _all: number
@@ -1440,6 +1543,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    is_active?: true
     created_at?: true
     updated_at?: true
   }
@@ -1449,6 +1553,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    is_active?: true
     created_at?: true
     updated_at?: true
   }
@@ -1458,6 +1563,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    is_active?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -1554,6 +1660,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active: boolean
     created_at: Date
     updated_at: Date
     _count: UserCountAggregateOutputType | null
@@ -1582,12 +1689,14 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
     budget?: boolean | User$budgetArgs<ExtArgs>
+    code_verification?: boolean | User$code_verificationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1596,6 +1705,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1605,6 +1715,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1614,16 +1725,18 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    is_active?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
     budget?: boolean | User$budgetArgs<ExtArgs>
+    code_verification?: boolean | User$code_verificationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1636,12 +1749,14 @@ export namespace Prisma {
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       categories: Prisma.$CategoryPayload<ExtArgs>[]
       budget: Prisma.$BudgetPayload<ExtArgs>[]
+      code_verification: Prisma.$CodeVerificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
       email: string
       password: string
+      is_active: boolean
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["user"]>
@@ -2042,6 +2157,7 @@ export namespace Prisma {
     transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     categories<T extends User$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     budget<T extends User$budgetArgs<ExtArgs> = {}>(args?: Subset<T, User$budgetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    code_verification<T extends User$code_verificationArgs<ExtArgs> = {}>(args?: Subset<T, User$code_verificationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2075,6 +2191,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly is_active: FieldRef<"User", 'Boolean'>
     readonly created_at: FieldRef<"User", 'DateTime'>
     readonly updated_at: FieldRef<"User", 'DateTime'>
   }
@@ -2561,6 +2678,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.code_verification
+   */
+  export type User$code_verificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    where?: CodeVerificationWhereInput
+    orderBy?: CodeVerificationOrderByWithRelationInput | CodeVerificationOrderByWithRelationInput[]
+    cursor?: CodeVerificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CodeVerificationScalarFieldEnum | CodeVerificationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2576,6 +2717,1141 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CodeVerification
+   */
+
+  export type AggregateCodeVerification = {
+    _count: CodeVerificationCountAggregateOutputType | null
+    _avg: CodeVerificationAvgAggregateOutputType | null
+    _sum: CodeVerificationSumAggregateOutputType | null
+    _min: CodeVerificationMinAggregateOutputType | null
+    _max: CodeVerificationMaxAggregateOutputType | null
+  }
+
+  export type CodeVerificationAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type CodeVerificationSumAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type CodeVerificationMinAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    already_used: boolean | null
+    code: string | null
+    created_at: Date | null
+    used_at: Date | null
+    expire_date: Date | null
+    expired: boolean | null
+  }
+
+  export type CodeVerificationMaxAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+    already_used: boolean | null
+    code: string | null
+    created_at: Date | null
+    used_at: Date | null
+    expire_date: Date | null
+    expired: boolean | null
+  }
+
+  export type CodeVerificationCountAggregateOutputType = {
+    id: number
+    user_id: number
+    already_used: number
+    code: number
+    created_at: number
+    used_at: number
+    expire_date: number
+    expired: number
+    _all: number
+  }
+
+
+  export type CodeVerificationAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type CodeVerificationSumAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type CodeVerificationMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    already_used?: true
+    code?: true
+    created_at?: true
+    used_at?: true
+    expire_date?: true
+    expired?: true
+  }
+
+  export type CodeVerificationMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    already_used?: true
+    code?: true
+    created_at?: true
+    used_at?: true
+    expire_date?: true
+    expired?: true
+  }
+
+  export type CodeVerificationCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    already_used?: true
+    code?: true
+    created_at?: true
+    used_at?: true
+    expire_date?: true
+    expired?: true
+    _all?: true
+  }
+
+  export type CodeVerificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeVerification to aggregate.
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeVerifications to fetch.
+     */
+    orderBy?: CodeVerificationOrderByWithRelationInput | CodeVerificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CodeVerificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeVerifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeVerifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CodeVerifications
+    **/
+    _count?: true | CodeVerificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CodeVerificationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CodeVerificationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CodeVerificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CodeVerificationMaxAggregateInputType
+  }
+
+  export type GetCodeVerificationAggregateType<T extends CodeVerificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateCodeVerification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCodeVerification[P]>
+      : GetScalarType<T[P], AggregateCodeVerification[P]>
+  }
+
+
+
+
+  export type CodeVerificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CodeVerificationWhereInput
+    orderBy?: CodeVerificationOrderByWithAggregationInput | CodeVerificationOrderByWithAggregationInput[]
+    by: CodeVerificationScalarFieldEnum[] | CodeVerificationScalarFieldEnum
+    having?: CodeVerificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CodeVerificationCountAggregateInputType | true
+    _avg?: CodeVerificationAvgAggregateInputType
+    _sum?: CodeVerificationSumAggregateInputType
+    _min?: CodeVerificationMinAggregateInputType
+    _max?: CodeVerificationMaxAggregateInputType
+  }
+
+  export type CodeVerificationGroupByOutputType = {
+    id: number
+    user_id: number
+    already_used: boolean
+    code: string
+    created_at: Date
+    used_at: Date | null
+    expire_date: Date
+    expired: boolean
+    _count: CodeVerificationCountAggregateOutputType | null
+    _avg: CodeVerificationAvgAggregateOutputType | null
+    _sum: CodeVerificationSumAggregateOutputType | null
+    _min: CodeVerificationMinAggregateOutputType | null
+    _max: CodeVerificationMaxAggregateOutputType | null
+  }
+
+  type GetCodeVerificationGroupByPayload<T extends CodeVerificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CodeVerificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CodeVerificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CodeVerificationGroupByOutputType[P]>
+            : GetScalarType<T[P], CodeVerificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CodeVerificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    already_used?: boolean
+    code?: boolean
+    created_at?: boolean
+    used_at?: boolean
+    expire_date?: boolean
+    expired?: boolean
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeVerification"]>
+
+  export type CodeVerificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    already_used?: boolean
+    code?: boolean
+    created_at?: boolean
+    used_at?: boolean
+    expire_date?: boolean
+    expired?: boolean
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeVerification"]>
+
+  export type CodeVerificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    already_used?: boolean
+    code?: boolean
+    created_at?: boolean
+    used_at?: boolean
+    expire_date?: boolean
+    expired?: boolean
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["codeVerification"]>
+
+  export type CodeVerificationSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    already_used?: boolean
+    code?: boolean
+    created_at?: boolean
+    used_at?: boolean
+    expire_date?: boolean
+    expired?: boolean
+  }
+
+  export type CodeVerificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "already_used" | "code" | "created_at" | "used_at" | "expire_date" | "expired", ExtArgs["result"]["codeVerification"]>
+  export type CodeVerificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CodeVerificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CodeVerificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_for?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CodeVerificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CodeVerification"
+    objects: {
+      created_for: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      user_id: number
+      already_used: boolean
+      code: string
+      created_at: Date
+      used_at: Date | null
+      expire_date: Date
+      expired: boolean
+    }, ExtArgs["result"]["codeVerification"]>
+    composites: {}
+  }
+
+  type CodeVerificationGetPayload<S extends boolean | null | undefined | CodeVerificationDefaultArgs> = $Result.GetResult<Prisma.$CodeVerificationPayload, S>
+
+  type CodeVerificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CodeVerificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CodeVerificationCountAggregateInputType | true
+    }
+
+  export interface CodeVerificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CodeVerification'], meta: { name: 'CodeVerification' } }
+    /**
+     * Find zero or one CodeVerification that matches the filter.
+     * @param {CodeVerificationFindUniqueArgs} args - Arguments to find a CodeVerification
+     * @example
+     * // Get one CodeVerification
+     * const codeVerification = await prisma.codeVerification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CodeVerificationFindUniqueArgs>(args: SelectSubset<T, CodeVerificationFindUniqueArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CodeVerification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CodeVerificationFindUniqueOrThrowArgs} args - Arguments to find a CodeVerification
+     * @example
+     * // Get one CodeVerification
+     * const codeVerification = await prisma.codeVerification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CodeVerificationFindUniqueOrThrowArgs>(args: SelectSubset<T, CodeVerificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeVerification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationFindFirstArgs} args - Arguments to find a CodeVerification
+     * @example
+     * // Get one CodeVerification
+     * const codeVerification = await prisma.codeVerification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CodeVerificationFindFirstArgs>(args?: SelectSubset<T, CodeVerificationFindFirstArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CodeVerification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationFindFirstOrThrowArgs} args - Arguments to find a CodeVerification
+     * @example
+     * // Get one CodeVerification
+     * const codeVerification = await prisma.codeVerification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CodeVerificationFindFirstOrThrowArgs>(args?: SelectSubset<T, CodeVerificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CodeVerifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CodeVerifications
+     * const codeVerifications = await prisma.codeVerification.findMany()
+     * 
+     * // Get first 10 CodeVerifications
+     * const codeVerifications = await prisma.codeVerification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const codeVerificationWithIdOnly = await prisma.codeVerification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CodeVerificationFindManyArgs>(args?: SelectSubset<T, CodeVerificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CodeVerification.
+     * @param {CodeVerificationCreateArgs} args - Arguments to create a CodeVerification.
+     * @example
+     * // Create one CodeVerification
+     * const CodeVerification = await prisma.codeVerification.create({
+     *   data: {
+     *     // ... data to create a CodeVerification
+     *   }
+     * })
+     * 
+     */
+    create<T extends CodeVerificationCreateArgs>(args: SelectSubset<T, CodeVerificationCreateArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CodeVerifications.
+     * @param {CodeVerificationCreateManyArgs} args - Arguments to create many CodeVerifications.
+     * @example
+     * // Create many CodeVerifications
+     * const codeVerification = await prisma.codeVerification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CodeVerificationCreateManyArgs>(args?: SelectSubset<T, CodeVerificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CodeVerifications and returns the data saved in the database.
+     * @param {CodeVerificationCreateManyAndReturnArgs} args - Arguments to create many CodeVerifications.
+     * @example
+     * // Create many CodeVerifications
+     * const codeVerification = await prisma.codeVerification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CodeVerifications and only return the `id`
+     * const codeVerificationWithIdOnly = await prisma.codeVerification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CodeVerificationCreateManyAndReturnArgs>(args?: SelectSubset<T, CodeVerificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CodeVerification.
+     * @param {CodeVerificationDeleteArgs} args - Arguments to delete one CodeVerification.
+     * @example
+     * // Delete one CodeVerification
+     * const CodeVerification = await prisma.codeVerification.delete({
+     *   where: {
+     *     // ... filter to delete one CodeVerification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CodeVerificationDeleteArgs>(args: SelectSubset<T, CodeVerificationDeleteArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CodeVerification.
+     * @param {CodeVerificationUpdateArgs} args - Arguments to update one CodeVerification.
+     * @example
+     * // Update one CodeVerification
+     * const codeVerification = await prisma.codeVerification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CodeVerificationUpdateArgs>(args: SelectSubset<T, CodeVerificationUpdateArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CodeVerifications.
+     * @param {CodeVerificationDeleteManyArgs} args - Arguments to filter CodeVerifications to delete.
+     * @example
+     * // Delete a few CodeVerifications
+     * const { count } = await prisma.codeVerification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CodeVerificationDeleteManyArgs>(args?: SelectSubset<T, CodeVerificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeVerifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CodeVerifications
+     * const codeVerification = await prisma.codeVerification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CodeVerificationUpdateManyArgs>(args: SelectSubset<T, CodeVerificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CodeVerifications and returns the data updated in the database.
+     * @param {CodeVerificationUpdateManyAndReturnArgs} args - Arguments to update many CodeVerifications.
+     * @example
+     * // Update many CodeVerifications
+     * const codeVerification = await prisma.codeVerification.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CodeVerifications and only return the `id`
+     * const codeVerificationWithIdOnly = await prisma.codeVerification.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CodeVerificationUpdateManyAndReturnArgs>(args: SelectSubset<T, CodeVerificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CodeVerification.
+     * @param {CodeVerificationUpsertArgs} args - Arguments to update or create a CodeVerification.
+     * @example
+     * // Update or create a CodeVerification
+     * const codeVerification = await prisma.codeVerification.upsert({
+     *   create: {
+     *     // ... data to create a CodeVerification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CodeVerification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CodeVerificationUpsertArgs>(args: SelectSubset<T, CodeVerificationUpsertArgs<ExtArgs>>): Prisma__CodeVerificationClient<$Result.GetResult<Prisma.$CodeVerificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CodeVerifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationCountArgs} args - Arguments to filter CodeVerifications to count.
+     * @example
+     * // Count the number of CodeVerifications
+     * const count = await prisma.codeVerification.count({
+     *   where: {
+     *     // ... the filter for the CodeVerifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends CodeVerificationCountArgs>(
+      args?: Subset<T, CodeVerificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CodeVerificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CodeVerification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CodeVerificationAggregateArgs>(args: Subset<T, CodeVerificationAggregateArgs>): Prisma.PrismaPromise<GetCodeVerificationAggregateType<T>>
+
+    /**
+     * Group by CodeVerification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CodeVerificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CodeVerificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CodeVerificationGroupByArgs['orderBy'] }
+        : { orderBy?: CodeVerificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CodeVerificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCodeVerificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CodeVerification model
+   */
+  readonly fields: CodeVerificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CodeVerification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CodeVerificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    created_for<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CodeVerification model
+   */
+  interface CodeVerificationFieldRefs {
+    readonly id: FieldRef<"CodeVerification", 'Int'>
+    readonly user_id: FieldRef<"CodeVerification", 'Int'>
+    readonly already_used: FieldRef<"CodeVerification", 'Boolean'>
+    readonly code: FieldRef<"CodeVerification", 'String'>
+    readonly created_at: FieldRef<"CodeVerification", 'DateTime'>
+    readonly used_at: FieldRef<"CodeVerification", 'DateTime'>
+    readonly expire_date: FieldRef<"CodeVerification", 'DateTime'>
+    readonly expired: FieldRef<"CodeVerification", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CodeVerification findUnique
+   */
+  export type CodeVerificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeVerification to fetch.
+     */
+    where: CodeVerificationWhereUniqueInput
+  }
+
+  /**
+   * CodeVerification findUniqueOrThrow
+   */
+  export type CodeVerificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeVerification to fetch.
+     */
+    where: CodeVerificationWhereUniqueInput
+  }
+
+  /**
+   * CodeVerification findFirst
+   */
+  export type CodeVerificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeVerification to fetch.
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeVerifications to fetch.
+     */
+    orderBy?: CodeVerificationOrderByWithRelationInput | CodeVerificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeVerifications.
+     */
+    cursor?: CodeVerificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeVerifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeVerifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeVerifications.
+     */
+    distinct?: CodeVerificationScalarFieldEnum | CodeVerificationScalarFieldEnum[]
+  }
+
+  /**
+   * CodeVerification findFirstOrThrow
+   */
+  export type CodeVerificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeVerification to fetch.
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeVerifications to fetch.
+     */
+    orderBy?: CodeVerificationOrderByWithRelationInput | CodeVerificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CodeVerifications.
+     */
+    cursor?: CodeVerificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeVerifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeVerifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CodeVerifications.
+     */
+    distinct?: CodeVerificationScalarFieldEnum | CodeVerificationScalarFieldEnum[]
+  }
+
+  /**
+   * CodeVerification findMany
+   */
+  export type CodeVerificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter, which CodeVerifications to fetch.
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CodeVerifications to fetch.
+     */
+    orderBy?: CodeVerificationOrderByWithRelationInput | CodeVerificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CodeVerifications.
+     */
+    cursor?: CodeVerificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CodeVerifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CodeVerifications.
+     */
+    skip?: number
+    distinct?: CodeVerificationScalarFieldEnum | CodeVerificationScalarFieldEnum[]
+  }
+
+  /**
+   * CodeVerification create
+   */
+  export type CodeVerificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CodeVerification.
+     */
+    data: XOR<CodeVerificationCreateInput, CodeVerificationUncheckedCreateInput>
+  }
+
+  /**
+   * CodeVerification createMany
+   */
+  export type CodeVerificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CodeVerifications.
+     */
+    data: CodeVerificationCreateManyInput | CodeVerificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CodeVerification createManyAndReturn
+   */
+  export type CodeVerificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many CodeVerifications.
+     */
+    data: CodeVerificationCreateManyInput | CodeVerificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CodeVerification update
+   */
+  export type CodeVerificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CodeVerification.
+     */
+    data: XOR<CodeVerificationUpdateInput, CodeVerificationUncheckedUpdateInput>
+    /**
+     * Choose, which CodeVerification to update.
+     */
+    where: CodeVerificationWhereUniqueInput
+  }
+
+  /**
+   * CodeVerification updateMany
+   */
+  export type CodeVerificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CodeVerifications.
+     */
+    data: XOR<CodeVerificationUpdateManyMutationInput, CodeVerificationUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeVerifications to update
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * Limit how many CodeVerifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeVerification updateManyAndReturn
+   */
+  export type CodeVerificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * The data used to update CodeVerifications.
+     */
+    data: XOR<CodeVerificationUpdateManyMutationInput, CodeVerificationUncheckedUpdateManyInput>
+    /**
+     * Filter which CodeVerifications to update
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * Limit how many CodeVerifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CodeVerification upsert
+   */
+  export type CodeVerificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CodeVerification to update in case it exists.
+     */
+    where: CodeVerificationWhereUniqueInput
+    /**
+     * In case the CodeVerification found by the `where` argument doesn't exist, create a new CodeVerification with this data.
+     */
+    create: XOR<CodeVerificationCreateInput, CodeVerificationUncheckedCreateInput>
+    /**
+     * In case the CodeVerification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CodeVerificationUpdateInput, CodeVerificationUncheckedUpdateInput>
+  }
+
+  /**
+   * CodeVerification delete
+   */
+  export type CodeVerificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
+    /**
+     * Filter which CodeVerification to delete.
+     */
+    where: CodeVerificationWhereUniqueInput
+  }
+
+  /**
+   * CodeVerification deleteMany
+   */
+  export type CodeVerificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CodeVerifications to delete
+     */
+    where?: CodeVerificationWhereInput
+    /**
+     * Limit how many CodeVerifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CodeVerification without action
+   */
+  export type CodeVerificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CodeVerification
+     */
+    select?: CodeVerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CodeVerification
+     */
+    omit?: CodeVerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CodeVerificationInclude<ExtArgs> | null
   }
 
 
@@ -7254,11 +8530,26 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    is_active: 'is_active',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const CodeVerificationScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    already_used: 'already_used',
+    code: 'code',
+    created_at: 'created_at',
+    used_at: 'used_at',
+    expire_date: 'expire_date',
+    expired: 'expired'
+  };
+
+  export type CodeVerificationScalarFieldEnum = (typeof CodeVerificationScalarFieldEnum)[keyof typeof CodeVerificationScalarFieldEnum]
 
 
   export const AccountScalarFieldEnum: {
@@ -7372,6 +8663,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -7438,12 +8736,14 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    is_active?: BoolFilter<"User"> | boolean
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     transactions?: TransactionListRelationFilter
     categories?: CategoryListRelationFilter
     budget?: BudgetListRelationFilter
+    code_verification?: CodeVerificationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7451,12 +8751,14 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     transactions?: TransactionOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
     budget?: BudgetOrderByRelationAggregateInput
+    code_verification?: CodeVerificationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7467,12 +8769,14 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    is_active?: BoolFilter<"User"> | boolean
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     transactions?: TransactionListRelationFilter
     categories?: CategoryListRelationFilter
     budget?: BudgetListRelationFilter
+    code_verification?: CodeVerificationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7480,6 +8784,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -7497,8 +8802,81 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    is_active?: BoolWithAggregatesFilter<"User"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type CodeVerificationWhereInput = {
+    AND?: CodeVerificationWhereInput | CodeVerificationWhereInput[]
+    OR?: CodeVerificationWhereInput[]
+    NOT?: CodeVerificationWhereInput | CodeVerificationWhereInput[]
+    id?: IntFilter<"CodeVerification"> | number
+    user_id?: IntFilter<"CodeVerification"> | number
+    already_used?: BoolFilter<"CodeVerification"> | boolean
+    code?: StringFilter<"CodeVerification"> | string
+    created_at?: DateTimeFilter<"CodeVerification"> | Date | string
+    used_at?: DateTimeNullableFilter<"CodeVerification"> | Date | string | null
+    expire_date?: DateTimeFilter<"CodeVerification"> | Date | string
+    expired?: BoolFilter<"CodeVerification"> | boolean
+    created_for?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CodeVerificationOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    already_used?: SortOrder
+    code?: SortOrder
+    created_at?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    expire_date?: SortOrder
+    expired?: SortOrder
+    created_for?: UserOrderByWithRelationInput
+  }
+
+  export type CodeVerificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    code?: string
+    AND?: CodeVerificationWhereInput | CodeVerificationWhereInput[]
+    OR?: CodeVerificationWhereInput[]
+    NOT?: CodeVerificationWhereInput | CodeVerificationWhereInput[]
+    user_id?: IntFilter<"CodeVerification"> | number
+    already_used?: BoolFilter<"CodeVerification"> | boolean
+    created_at?: DateTimeFilter<"CodeVerification"> | Date | string
+    used_at?: DateTimeNullableFilter<"CodeVerification"> | Date | string | null
+    expire_date?: DateTimeFilter<"CodeVerification"> | Date | string
+    expired?: BoolFilter<"CodeVerification"> | boolean
+    created_for?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "code">
+
+  export type CodeVerificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    already_used?: SortOrder
+    code?: SortOrder
+    created_at?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    expire_date?: SortOrder
+    expired?: SortOrder
+    _count?: CodeVerificationCountOrderByAggregateInput
+    _avg?: CodeVerificationAvgOrderByAggregateInput
+    _max?: CodeVerificationMaxOrderByAggregateInput
+    _min?: CodeVerificationMinOrderByAggregateInput
+    _sum?: CodeVerificationSumOrderByAggregateInput
+  }
+
+  export type CodeVerificationScalarWhereWithAggregatesInput = {
+    AND?: CodeVerificationScalarWhereWithAggregatesInput | CodeVerificationScalarWhereWithAggregatesInput[]
+    OR?: CodeVerificationScalarWhereWithAggregatesInput[]
+    NOT?: CodeVerificationScalarWhereWithAggregatesInput | CodeVerificationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CodeVerification"> | number
+    user_id?: IntWithAggregatesFilter<"CodeVerification"> | number
+    already_used?: BoolWithAggregatesFilter<"CodeVerification"> | boolean
+    code?: StringWithAggregatesFilter<"CodeVerification"> | string
+    created_at?: DateTimeWithAggregatesFilter<"CodeVerification"> | Date | string
+    used_at?: DateTimeNullableWithAggregatesFilter<"CodeVerification"> | Date | string | null
+    expire_date?: DateTimeWithAggregatesFilter<"CodeVerification"> | Date | string
+    expired?: BoolWithAggregatesFilter<"CodeVerification"> | boolean
   }
 
   export type AccountWhereInput = {
@@ -7796,12 +9174,14 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     budget?: BudgetCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7809,24 +9189,28 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     budget?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     budget?: BudgetUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7834,12 +9218,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     budget?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7847,6 +9233,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -7855,6 +9242,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7864,8 +9252,82 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CodeVerificationCreateInput = {
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
+    created_for: UserCreateNestedOneWithoutCode_verificationInput
+  }
+
+  export type CodeVerificationUncheckedCreateInput = {
+    id?: number
+    user_id: number
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
+  }
+
+  export type CodeVerificationUpdateInput = {
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
+    created_for?: UserUpdateOneRequiredWithoutCode_verificationNestedInput
+  }
+
+  export type CodeVerificationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CodeVerificationCreateManyInput = {
+    id?: number
+    user_id: number
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
+  }
+
+  export type CodeVerificationUpdateManyMutationInput = {
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CodeVerificationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AccountCreateInput = {
@@ -8174,6 +9636,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8209,6 +9676,12 @@ export namespace Prisma {
     none?: BudgetWhereInput
   }
 
+  export type CodeVerificationListRelationFilter = {
+    every?: CodeVerificationWhereInput
+    some?: CodeVerificationWhereInput
+    none?: CodeVerificationWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -8225,11 +9698,16 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CodeVerificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8243,6 +9721,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8252,6 +9731,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    is_active?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8294,6 +9774,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8308,6 +9796,84 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type CodeVerificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    already_used?: SortOrder
+    code?: SortOrder
+    created_at?: SortOrder
+    used_at?: SortOrder
+    expire_date?: SortOrder
+    expired?: SortOrder
+  }
+
+  export type CodeVerificationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type CodeVerificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    already_used?: SortOrder
+    code?: SortOrder
+    created_at?: SortOrder
+    used_at?: SortOrder
+    expire_date?: SortOrder
+    expired?: SortOrder
+  }
+
+  export type CodeVerificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    already_used?: SortOrder
+    code?: SortOrder
+    created_at?: SortOrder
+    used_at?: SortOrder
+    expire_date?: SortOrder
+    expired?: SortOrder
+  }
+
+  export type CodeVerificationSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type DecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -8317,11 +9883,6 @@ export namespace Prisma {
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type AccountCountOrderByAggregateInput = {
@@ -8409,11 +9970,6 @@ export namespace Prisma {
   export type AccountScalarRelationFilter = {
     is?: AccountWhereInput
     isNot?: AccountWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type TransactionCountOrderByAggregateInput = {
@@ -8640,6 +10196,13 @@ export namespace Prisma {
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
   }
 
+  export type CodeVerificationCreateNestedManyWithoutCreated_forInput = {
+    create?: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput> | CodeVerificationCreateWithoutCreated_forInput[] | CodeVerificationUncheckedCreateWithoutCreated_forInput[]
+    connectOrCreate?: CodeVerificationCreateOrConnectWithoutCreated_forInput | CodeVerificationCreateOrConnectWithoutCreated_forInput[]
+    createMany?: CodeVerificationCreateManyCreated_forInputEnvelope
+    connect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -8668,8 +10231,19 @@ export namespace Prisma {
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
   }
 
+  export type CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput = {
+    create?: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput> | CodeVerificationCreateWithoutCreated_forInput[] | CodeVerificationUncheckedCreateWithoutCreated_forInput[]
+    connectOrCreate?: CodeVerificationCreateOrConnectWithoutCreated_forInput | CodeVerificationCreateOrConnectWithoutCreated_forInput[]
+    createMany?: CodeVerificationCreateManyCreated_forInputEnvelope
+    connect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -8730,6 +10304,20 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+  }
+
+  export type CodeVerificationUpdateManyWithoutCreated_forNestedInput = {
+    create?: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput> | CodeVerificationCreateWithoutCreated_forInput[] | CodeVerificationUncheckedCreateWithoutCreated_forInput[]
+    connectOrCreate?: CodeVerificationCreateOrConnectWithoutCreated_forInput | CodeVerificationCreateOrConnectWithoutCreated_forInput[]
+    upsert?: CodeVerificationUpsertWithWhereUniqueWithoutCreated_forInput | CodeVerificationUpsertWithWhereUniqueWithoutCreated_forInput[]
+    createMany?: CodeVerificationCreateManyCreated_forInputEnvelope
+    set?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    disconnect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    delete?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    connect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    update?: CodeVerificationUpdateWithWhereUniqueWithoutCreated_forInput | CodeVerificationUpdateWithWhereUniqueWithoutCreated_forInput[]
+    updateMany?: CodeVerificationUpdateManyWithWhereWithoutCreated_forInput | CodeVerificationUpdateManyWithWhereWithoutCreated_forInput[]
+    deleteMany?: CodeVerificationScalarWhereInput | CodeVerificationScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -8794,6 +10382,38 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+  }
+
+  export type CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput = {
+    create?: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput> | CodeVerificationCreateWithoutCreated_forInput[] | CodeVerificationUncheckedCreateWithoutCreated_forInput[]
+    connectOrCreate?: CodeVerificationCreateOrConnectWithoutCreated_forInput | CodeVerificationCreateOrConnectWithoutCreated_forInput[]
+    upsert?: CodeVerificationUpsertWithWhereUniqueWithoutCreated_forInput | CodeVerificationUpsertWithWhereUniqueWithoutCreated_forInput[]
+    createMany?: CodeVerificationCreateManyCreated_forInputEnvelope
+    set?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    disconnect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    delete?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    connect?: CodeVerificationWhereUniqueInput | CodeVerificationWhereUniqueInput[]
+    update?: CodeVerificationUpdateWithWhereUniqueWithoutCreated_forInput | CodeVerificationUpdateWithWhereUniqueWithoutCreated_forInput[]
+    updateMany?: CodeVerificationUpdateManyWithWhereWithoutCreated_forInput | CodeVerificationUpdateManyWithWhereWithoutCreated_forInput[]
+    deleteMany?: CodeVerificationScalarWhereInput | CodeVerificationScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCode_verificationInput = {
+    create?: XOR<UserCreateWithoutCode_verificationInput, UserUncheckedCreateWithoutCode_verificationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCode_verificationInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutCode_verificationNestedInput = {
+    create?: XOR<UserCreateWithoutCode_verificationInput, UserUncheckedCreateWithoutCode_verificationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCode_verificationInput
+    upsert?: UserUpsertWithoutCode_verificationInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCode_verificationInput, UserUpdateWithoutCode_verificationInput>, UserUncheckedUpdateWithoutCode_verificationInput>
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -9071,6 +10691,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -9126,6 +10751,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -9138,6 +10771,42 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -9203,17 +10872,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9369,6 +11027,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CodeVerificationCreateWithoutCreated_forInput = {
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
+  }
+
+  export type CodeVerificationUncheckedCreateWithoutCreated_forInput = {
+    id?: number
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
+  }
+
+  export type CodeVerificationCreateOrConnectWithoutCreated_forInput = {
+    where: CodeVerificationWhereUniqueInput
+    create: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput>
+  }
+
+  export type CodeVerificationCreateManyCreated_forInputEnvelope = {
+    data: CodeVerificationCreateManyCreated_forInput | CodeVerificationCreateManyCreated_forInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -9486,15 +11173,117 @@ export namespace Prisma {
     category_id?: IntNullableFilter<"Budget"> | number | null
   }
 
+  export type CodeVerificationUpsertWithWhereUniqueWithoutCreated_forInput = {
+    where: CodeVerificationWhereUniqueInput
+    update: XOR<CodeVerificationUpdateWithoutCreated_forInput, CodeVerificationUncheckedUpdateWithoutCreated_forInput>
+    create: XOR<CodeVerificationCreateWithoutCreated_forInput, CodeVerificationUncheckedCreateWithoutCreated_forInput>
+  }
+
+  export type CodeVerificationUpdateWithWhereUniqueWithoutCreated_forInput = {
+    where: CodeVerificationWhereUniqueInput
+    data: XOR<CodeVerificationUpdateWithoutCreated_forInput, CodeVerificationUncheckedUpdateWithoutCreated_forInput>
+  }
+
+  export type CodeVerificationUpdateManyWithWhereWithoutCreated_forInput = {
+    where: CodeVerificationScalarWhereInput
+    data: XOR<CodeVerificationUpdateManyMutationInput, CodeVerificationUncheckedUpdateManyWithoutCreated_forInput>
+  }
+
+  export type CodeVerificationScalarWhereInput = {
+    AND?: CodeVerificationScalarWhereInput | CodeVerificationScalarWhereInput[]
+    OR?: CodeVerificationScalarWhereInput[]
+    NOT?: CodeVerificationScalarWhereInput | CodeVerificationScalarWhereInput[]
+    id?: IntFilter<"CodeVerification"> | number
+    user_id?: IntFilter<"CodeVerification"> | number
+    already_used?: BoolFilter<"CodeVerification"> | boolean
+    code?: StringFilter<"CodeVerification"> | string
+    created_at?: DateTimeFilter<"CodeVerification"> | Date | string
+    used_at?: DateTimeNullableFilter<"CodeVerification"> | Date | string | null
+    expire_date?: DateTimeFilter<"CodeVerification"> | Date | string
+    expired?: BoolFilter<"CodeVerification"> | boolean
+  }
+
+  export type UserCreateWithoutCode_verificationInput = {
+    name: string
+    email: string
+    password: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    categories?: CategoryCreateNestedManyWithoutUserInput
+    budget?: BudgetCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCode_verificationInput = {
+    id?: number
+    name: string
+    email: string
+    password: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    budget?: BudgetUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCode_verificationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCode_verificationInput, UserUncheckedCreateWithoutCode_verificationInput>
+  }
+
+  export type UserUpsertWithoutCode_verificationInput = {
+    update: XOR<UserUpdateWithoutCode_verificationInput, UserUncheckedUpdateWithoutCode_verificationInput>
+    create: XOR<UserCreateWithoutCode_verificationInput, UserUncheckedCreateWithoutCode_verificationInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCode_verificationInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCode_verificationInput, UserUncheckedUpdateWithoutCode_verificationInput>
+  }
+
+  export type UserUpdateWithoutCode_verificationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    categories?: CategoryUpdateManyWithoutUserNestedInput
+    budget?: BudgetUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCode_verificationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    budget?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutAccountsInput = {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     transactions?: TransactionCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     budget?: BudgetCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -9502,11 +11291,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     budget?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -9562,11 +11353,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     budget?: BudgetUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -9574,11 +11367,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     budget?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutAccountInput = {
@@ -9601,11 +11396,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     budget?: BudgetCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -9613,11 +11410,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     budget?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -9686,11 +11485,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     budget?: BudgetUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -9698,11 +11499,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     budget?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput
   }
 
   export type CategoryUpsertWithoutTransactionsInput = {
@@ -9767,11 +11570,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     budget?: BudgetCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -9779,11 +11584,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     budget?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -9866,11 +11673,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     budget?: BudgetUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -9878,11 +11687,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     budget?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -9921,11 +11732,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserUncheckedCreateWithoutBudgetInput = {
@@ -9933,11 +11746,13 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    code_verification?: CodeVerificationUncheckedCreateNestedManyWithoutCreated_forInput
   }
 
   export type UserCreateOrConnectWithoutBudgetInput = {
@@ -9984,11 +11799,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUpdateManyWithoutCreated_forNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBudgetInput = {
@@ -9996,11 +11813,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    code_verification?: CodeVerificationUncheckedUpdateManyWithoutCreated_forNestedInput
   }
 
   export type CategoryUpsertWithoutBudgetInput = {
@@ -10068,6 +11887,16 @@ export namespace Prisma {
     period_start: Date | string
     period_end: Date | string
     category_id?: number | null
+  }
+
+  export type CodeVerificationCreateManyCreated_forInput = {
+    id?: number
+    already_used?: boolean
+    code: string
+    created_at: Date | string
+    used_at?: Date | string | null
+    expire_date: Date | string
+    expired?: boolean
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -10181,6 +12010,35 @@ export namespace Prisma {
     period_start?: DateTimeFieldUpdateOperationsInput | Date | string
     period_end?: DateTimeFieldUpdateOperationsInput | Date | string
     category_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type CodeVerificationUpdateWithoutCreated_forInput = {
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CodeVerificationUncheckedUpdateWithoutCreated_forInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type CodeVerificationUncheckedUpdateManyWithoutCreated_forInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    already_used?: BoolFieldUpdateOperationsInput | boolean
+    code?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expire_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    expired?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TransactionCreateManyAccountInput = {
