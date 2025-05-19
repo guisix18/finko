@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/user.dto';
-import { Prisma, User } from 'generated/prisma';
+import { Prisma, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { RecordWithId } from 'src/common/record-with-id';
 import { SendMailService } from 'src/mailer/mailer.service';

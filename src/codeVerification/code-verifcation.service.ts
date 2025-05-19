@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma, CodeVerification } from '@prisma/client';
 import { randomUUID } from 'crypto';
-import { CodeVerification, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class CodeVerificationService {
