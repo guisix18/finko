@@ -10,8 +10,8 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
 import { IsPublic } from './decorators/is-public.decorator';
-import { UserToken } from './models/UserToken';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { UserToken, UserTokenResponse } from './models/UserToken';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginRequestBody } from './models/LoginRequestBody';
 
 @ApiTags('auth')
@@ -29,6 +29,10 @@ export class AuthController {
     description: 'User login credentials',
     type: LoginRequestBody,
     required: true,
+  })
+  @ApiOkResponse({
+    description: 'User logged in successfully',
+    type: UserTokenResponse,
   })
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
