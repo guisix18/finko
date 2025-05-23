@@ -43,6 +43,7 @@ export class UserController {
       ttl: 60,
     },
   })
+  @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() dto: CreateUserDto): Promise<RecordWithId> {
     return this.userService.createUser(dto);
   }
