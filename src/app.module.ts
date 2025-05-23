@@ -13,17 +13,23 @@ import { AccountModule } from './account/account.module';
     AuthModule,
     AccountModule,
     ConfigModule.forRoot(),
-    ThrottlerModule.forRoot(),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          limit: 10,
+          ttl: 60000,
+        },
+      ],
+    }),
   ],
-  controllers: [],
   providers: [
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useClass: ThrottlerGuard,
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
+      useClass: JwtAuthGuard,
     },
   ],
 })
