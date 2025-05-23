@@ -56,7 +56,7 @@ export class UserService {
 
     const now = new Date();
 
-    return await this.prisma.$transaction(
+    const result = await this.prisma.$transaction(
       async (prismaTx: Prisma.TransactionClient) => {
         const user = await prismaTx.user.create({
           data: {
@@ -80,10 +80,23 @@ export class UserService {
         });
 
         return {
-          id: user.id,
+          user,
+          code,
         };
       },
     );
+
+    if (result) {
+      this.mailerService.sendEmailValidationLink({
+        name: result.user.name,
+        code: result.code.code,
+        email: result.user.email,
+      });
+    }
+
+    return {
+      id: result.user.id,
+    };
   }
 
   async validateEmail(code: string): Promise<void> {
