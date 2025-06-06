@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType, PickType } from '@nestjs/swagger';
 import {
   IsNumber,
   IsOptional,
@@ -27,4 +27,25 @@ export class CreateAccountDto {
     maximum: 9999999999,
   })
   balance?: number;
+}
+
+export class UpdateAccountDto extends PartialType(
+  PickType(CreateAccountDto, ['name']),
+) {}
+
+export class AccountDto {
+  @IsNumber()
+  @ApiProperty({
+    description: 'Account ID',
+  })
+  id: number;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Account name',
+  })
+  name: string;
+}
+export class GetAccountDto {
+  rows: AccountDto[];
 }
