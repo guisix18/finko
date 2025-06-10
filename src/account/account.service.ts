@@ -117,4 +117,14 @@ export class AccountService {
       },
     });
   }
+
+  async deleteAccount(account_id: number, user: UserFromJwt): Promise<void> {
+    const account = await this.findAccountById(account_id, user);
+
+    await this.prisma.account.delete({
+      where: {
+        id: account.id,
+      },
+    });
+  }
 }

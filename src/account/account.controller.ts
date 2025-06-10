@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -12,6 +13,7 @@ import { AccountService } from './account.service';
 import {
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
@@ -68,6 +70,7 @@ export class AccountController {
   @ApiOkResponse({
     description: 'Account updated successfully',
   })
+  @ApiNotFoundResponse({ description: 'Account not found' })
   @HttpCode(HttpStatus.OK)
   async updateAccount(
     @Param() params: ParamsId,
@@ -75,5 +78,16 @@ export class AccountController {
     @CurrentUser() user: UserFromJwt,
   ): Promise<void> {
     return this.accountService.updateAccount(params.id, updateAccountDto, user);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete an account by ID' })
+  @ApiOkResponse({ description: 'Account successfully deleted' })
+  @ApiNotFoundResponse({ description: 'Account not found' })
+  async deleteAccount(
+    @Param() params: ParamsId,
+    @CurrentUser() user: UserFromJwt,
+  ): Promise<void> {
+    return this.accountService.deleteAccount(params.id, user);
   }
 }
