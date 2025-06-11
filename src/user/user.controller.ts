@@ -37,12 +37,6 @@ export class UserController {
     type: RecordWithId,
   })
   @ApiResponse(usersConflictsErrors)
-  @Throttle({
-    default: {
-      limit: 2,
-      ttl: 60,
-    },
-  })
   async createUser(@Body() dto: CreateUserDto): Promise<RecordWithId> {
     return this.userService.createUser(dto);
   }
@@ -52,12 +46,6 @@ export class UserController {
   @ApiOperation({
     summary: 'Validate email',
     description: 'Validate the email of the user',
-  })
-  @Throttle({
-    default: {
-      limit: 2,
-      ttl: 60,
-    },
   })
   @HttpCode(HttpStatus.NO_CONTENT)
   async validateEmail(@Query() query: CodeDto): Promise<void> {
